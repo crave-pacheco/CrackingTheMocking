@@ -1,0 +1,33 @@
+"""
+Function which detects if a position is out of the edge of the matrix
+"""
+def is_out_edges(matrix_size, position):
+    return position[0] > matrix_size[0] - 1 or position[0] < 0 or position[1] > matrix_size[1] - 1 or position[1] < 0
+
+"""
+This functions modifies matrix in place. It uses a recursion stack to avoid recursive calls. It assumes that matrix is square.
+"""
+def fill(matrix, x, y, new_color):
+    matrix_size = [len(matrix), len(matrix[0])]
+    original = matrix[x][y]
+    operations = [(x, y)]
+
+    while len(operations):
+        x, y = operations.pop()
+        matrix[x][y] = new_color
+
+        # top
+        if not is_out_edges(matrix_size, [x - 1, y]) and matrix[x - 1][y] == original:
+            operations.append((x - 1, y))
+
+        # right
+        if not is_out_edges(matrix_size, [x, y + 1]) and matrix[x][y + 1] == original:
+            operations.append((x, y + 1))
+
+        # bottom
+        if not is_out_edges(matrix_size, [x + 1, y]) and matrix[x + 1][y] == original:
+            operations.append((x + 1, y))
+
+        # left
+        if not is_out_edges(matrix_size, [x, y - 1]) and matrix[x][y - 1] == original:
+            operations.append((x, y - 1))

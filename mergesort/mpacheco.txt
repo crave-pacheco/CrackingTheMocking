@@ -1,0 +1,36 @@
+var mergesort = function (array) {
+    var length = array.length;
+    var halfLength = Math.floor(length/2);
+    if (length == 1) {
+        return array;
+    }
+    var firstPart = mergesort(array.slice(0, halfLength));
+    var secondPart = mergesort(array.slice(halfLength, length));
+    return merge(firstPart, secondPart);
+}
+
+var merge = function (array1, array2) {
+    var i = 0;
+    var j = 0;
+    result = [];
+    while (true) {
+        if (i === array1.length) {
+            result = result.concat(array2.slice(j, array2.length));
+            break;
+        } else if (j === array2.length) {
+            result = result.concat(array1.slice(i, array1.length));
+            break
+        }
+    
+        if (array1[i] < array2[j]) {
+            result.push(array1[i]);
+            i++
+        } else {
+            result.push(array2[j]);
+            j++
+        }
+    }
+    return result;
+}
+
+mergesort([6, 3, 8, 3, 5, 3, 1, 2, 3, 4, 6, 76, 32, 87]);

@@ -1,0 +1,35 @@
+var array = [8, 7, 6, 5, 4, 8, 3, 6, 12, 65, 87, 3, 3, 21, 65, 87 ,43, 76, 832, 76, 43, 12, 34];
+
+var moveToRight = function(array, i, j) {
+	var oldValueI = array[i];
+	for (index = i; index < j; index++) {
+		array[index] = array[index + 1];
+	}
+	array[j] = oldValueI;
+}
+
+var quicksort = function(array, lo, hi) {
+	var rangeToSort = hi - lo,
+		i = lo,
+		j = hi,
+		k = hi;
+	if (rangeToSort < 1) {
+		return;
+	} else if (rangeToSort == 1) {
+		if (array[lo] > array[hi]) {
+			moveToRight(array, lo, hi);
+		}
+		return;
+	}
+	for (i = lo; i < j; i++) {
+		if (array[i] > array[j]) {
+			moveToRight(array, i, j);
+			j--;
+			i--;
+		}
+	}
+	quicksort(array, lo, j-1);
+	quicksort(array, j+1, hi);
+}
+
+quicksort(array, 0, array.length - 1);
